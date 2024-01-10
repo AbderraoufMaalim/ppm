@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="595.0" prefWidth="973.0" style="-fx-background-color: #0e0e21;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pushplaymanager.SessionsController">
+   <children>
+      <GridPane fx:id="gridPlay" hgap="4.0" layoutX="-80.0" layoutY="5.0" stylesheets="@../style/Application.css" vgap="4.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+      </GridPane>
+      <GridPane fx:id="gridTable" hgap="4.0" layoutX="-80.0" layoutY="250.0" stylesheets="@../style/Application.css" vgap="4.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+      </GridPane>
+      <GridPane fx:id="gridChaise" hgap="4.0" layoutX="-80.0" layoutY="480.0" stylesheets="@../style/Application.css" vgap="4.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+      </GridPane>
+      <GridPane fx:id="gridTest" hgap="4.0" layoutX="-80.0" layoutY="10.0" stylesheets="@../style/Application.css" vgap="4.0" visible="false">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+      </GridPane>
+      <Text fx:id="chichaText" fill="WHITE" layoutX="874.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="89.20068359375">
+         <font>
+            <Font name="Cambria Bold" size="17.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="758.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chicha Tables:" wrappingWidth="121.99998593330383">
+         <font>
+            <Font name="Cambria Bold" size="17.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="758.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chicha PS:" wrappingWidth="121.99998593330383">
+         <font>
+            <Font name="Cambria Bold" size="17.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="759.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chicha PC:" wrappingWidth="121.99998593330383">
+         <font>
+            <Font name="Cambria Bold" size="17.0" />
+         </font>
+      </Text>
+      <Text fx:id="chichaTextPs" fill="WHITE" layoutX="842.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="89.20068359375">
+         <font>
+            <Font name="Cambria Bold" size="17.0" />
+         </font>
+      </Text>
+      <Text fx:id="chichaTextPc" fill="WHITE" layoutX="844.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="89.20068359375">
+         <font>
+            <Font name="Cambria Bold" size="17.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="759.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chicha Chaises:" wrappingWidth="121.99998593330383">
+         <font>
+            <Font name="Cambria Bold" size="17.0" />
+         </font>
+      </Text>
+      <Text fx:id="chichaTextChaise" fill="WHITE" layoutX="881.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="89.20068359375">
+         <font>
+            <Font name="Cambria Bold" size="17.0" />
+         </font>
+      </Text>
+      <HBox layoutX="758.0" layoutY="140.0" prefHeight="20.0" prefWidth="196.0" spacing="5.0">
+         <children>
+            <FontAwesomeIcon fill="WHITE" iconName="DOLLAR" size="20" />
+            <Text fx:id="moneyText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="52.20068359375">
+               <font>
+                  <Font name="Cambria Bold" size="17.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="DA" wrappingWidth="26.28515625">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Text>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

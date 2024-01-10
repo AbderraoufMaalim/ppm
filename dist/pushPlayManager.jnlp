@@ -11,8 +11,11 @@
     <jar href="lib\fontawesomefx-8.1.jar" size="179086" download="eager" />
     <jar href="lib\jfoenix-8.0.3.jar" size="2452677" download="eager" />
     <jar href="lib\sqlite-jdbc-3.21.0.jar" size="6672489" download="eager" />
-    <jar href="pushPlayManager.jar" size="10684837" download="eager" />
+    <jar href="pushPlayManager.jar" size="10684823" download="eager" />
   </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="pushPlayManager" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
   <jfx:javafx-desc  width="800" height="600" main-class="pushplaymanager.PushPlayManager"  name="pushPlayManager" />
   <update check="always"/>
 </jnlp>

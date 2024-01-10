@@ -1,0 +1,8 @@
+.jfx-date-picker .text-field{
+-jfx-unfocus-color: blue;
+-fx-prompt-text-fill: blueviolet;
+-fx-text-fill: white;
+-fx-font-size: 18px;
+-fx-font-family: 'Josefin Sans';
+ -fx-font-weight: bold;
+}

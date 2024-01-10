@@ -1,0 +1,237 @@
+.user {
+    /*-fx-background-color: rgba(40, 40, 71, .5);*/
+    -fx-background-color: transparent;
+    -fx-border-color: rgba(69, 182, 211, 0.6);
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-text-fill:  rgba(69, 182, 211, 0.6);
+}
+
+.user:focused {
+        -fx-border-color: rgba(69, 182, 211, .9);
+        /*-fx-background-color: rgba(40, 40, 71, .5);*/
+        -fx-border-color: rgba(69, 182, 211, .9);
+        -fx-text-fill:  rgba(69, 182, 211, .9);
+}
+
+.user:hover:focused{
+        -fx-text-fill:  rgba(69, 182, 211, 1);
+        /*-fx-background-color: rgba(40, 40, 71, .5);*/
+        -fx-border-color: rgba(69, 182, 211, 1);
+}
+
+.user:hover{
+        -fx-text-fill:  rgb(0, 146, 251);
+        /*-fx-background-color: rgba(40, 40, 71, .5);*/
+        -fx-border-color: rgb(0, 146, 251);
+}
+
+.userFocus {
+    -fx-text-fill:  rgba(69, 182, 211, .9);
+        /*-fx-background-color: rgba(40, 40, 71, .5);*/
+        -fx-border-color: rgba(69, 182, 211, .9);
+}
+
+.userFocus:hover {
+    -fx-text-fill:  rgba(69, 182, 211, 1);
+      /*-fx-background-color: rgba(40, 40, 71, .5);*/
+     -fx-border-color: rgba(69, 182, 211, 1);
+}
+
+.password {
+        -fx-text-fill:  #e5f2d8;
+}
+
+.username:focused {
+        -fx-border-color: #00e26a;
+}
+.username:hover {
+        -fx-border-color: #6ed9a0;
+}
+.username {
+        -fx-border-color: #697178;
+}
+
+.username {
+    -fx-background-color: #2a363f;
+}
+
+
+.connect{
+	-fx-background-color: #45b6d3;
+
+}
+
+.connect:hover{
+	-fx-background-color: #3aa2bd;
+}
+
+.close:hover{
+            -fx-text-fill: #6ed9a0;
+            -fx-background-color: #3aa2bd;
+}
+
+
+
+.MainButton {
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color:  #1d1d36;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-font-family: 'Josefin Sans';
+    -fx-font-size: 14px;
+}
+
+
+.MainButton:hover{
+    -fx-background-color: #10165f;
+    -fx-text-fill: #d1cdcd;
+}
+
+
+.btnFocus {
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color:  #80bbe8;
+    -fx-font-family: 'Josefin Sans';
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+}
+
+
+.btnFocus:hover{
+    -fx-background-color: #4f8ab8;
+    -fx-text-fill: #e6e6e6;
+}
+
+.btnFocusUser {
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color:   #fc3033;
+    
+}
+
+
+.btnFocusUser:hover{
+    -fx-background-color: #b51618;
+    -fx-text-fill: white;
+}
+
+.btnFocusVisit {
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color:   #0089d9;
+    -fx-text-fill: white;
+}
+
+
+.btnFocusVisit:hover{
+    -fx-background-color: #0076ba;
+    -fx-text-fill: #e6e6e6;
+}
+
+.btnFocusHostoric {
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color:   #c40065;
+}
+
+
+.btnFocusHostoric:hover{
+    -fx-background-color: #b3025d;
+    -fx-text-fill: #e6e6e6;
+}
+
+.btnFocusPatient {
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color:   #b0a100;
+}
+
+
+.btnFocusPatient:hover{
+    -fx-background-color: #a39502;
+    -fx-text-fill: #e6e6e6;
+}
+
+.btnFocusRecette {
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color:   #5fb87c;
+}
+
+
+.btnFocusRecette:hover{
+    -fx-background-color: #53a36d;
+    -fx-text-fill: #e6e6e6;
+}
+
+
+
+
+.anchor{
+    -fx-background-color:  #d8e5f0;
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius:  0 0 0 0;
+}
+
+.labell{
+    -fx-font-weight:700;
+    -fx-font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+}
+
+
+.VisiteButton {
+    -fx-background-color:  #3a9de8;
+    -fx-border-radius: 20 20 20 20;
+    -fx-font-weight:700;
+    -fx-font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+    -fx-text-fill: white;
+}
+
+
+.VisiteButton:hover{
+    -fx-background-color: #0473c7;
+    -fx-text-fill: white;
+}
+
+
+
+.patientButton {
+    -fx-background-color:  #e0b92b;
+    -fx-border-radius: 20 20 20 20;
+    -fx-font-weight:700;
+    -fx-font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+    -fx-text-fill: white;
+}
+
+
+.patientButton:hover{
+    -fx-background-color: #d48f17;
+    -fx-text-fill: white;
+}
+
+
+
+.confirmButton{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.confirmButton:hover{
+    -fx-background-color: #0473c7;
+    -fx-text-fill: white;
+}
+
+.noheader .column-header-background {
+    -fx-max-height: 0;
+    -fx-pref-height: 0;
+    -fx-min-height: 0;
+    -fx-table-cell-border-color: transparent;
+    
+}
+
+.addBtn {
+    -fx-background-color:  #d1b1a9;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+
+.addBtn:hover{
+    -fx-background-color: #f7aa97;
+}

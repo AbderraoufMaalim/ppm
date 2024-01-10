@@ -1,0 +1,90 @@
+
+.todayBtn {
+    -fx-background-color:  transparent;
+    -fx-text-fill: red;
+}
+
+
+.todayBtn:hover{
+    -fx-text-fill: #d1cdcd;
+    -fx-background-color:  #80bbe8;
+}
+
+.todayBtn:focused{
+    -fx-background-color:  #80bbe8;
+    -fx-text-fill: White;
+}
+
+
+.btnFocus {
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color:  #80bbe8;
+    -fx-text-fill: #595959;
+}
+
+.statBtn {
+    -fx-background-color:  #29294f;
+}
+
+
+.statBtn:hover{
+    -fx-background-color:  #282869;
+}
+
+.statBtn:selected {
+    -fx-background-color:  #151561;
+}
+
+
+.spinner {
+    -fx-body-color: #10165f;
+    -fx-border-width: 0.5px;
+    -fx-background-radius: 2px;
+    -fx-background-color: white;
+    -fx-font-size: 12px; 
+    -fx-padding: 0px;
+    -fx-font-family: 'Josefin Sans';
+}
+
+
+.combo-box{
+    -fx-border-width: 0.5px;
+    -fx-border-color: #ACACAC;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-background-color: white;
+    -fx-font-size: 12px; 
+    -fx-padding: 0px;
+    -fx-font-family: 'Josefin Sans';
+}
+.combo-box:hover{
+    -fx-text-fill: white;
+}
+.combo-box:checked{
+
+}
+.combo-box-base:hover{
+    -fx-border-color: green;
+}
+.combo-box-base:focused{
+    /*    -fx-background-color: #1f4060;*/
+    -fx-text-fill: white;
+}
+.combo-box .list-view{
+    -fx-border-width: 0.5px;
+    -fx-border-color: #ACACAC;
+    -fx-background-color: white;
+    -fx-padding: 0px;
+    -fx-border-radius: 10px 10px 0px 0px;
+    -fx-background-radius: 10px 10px 0px 0px;
+}
+.combo-box .list-view .list-cell:filled {
+    -fx-text-fill: black;
+    -fx-font-size: 10px;
+    -fx-font-weight:700;
+           }
+
+
+
+      
+           

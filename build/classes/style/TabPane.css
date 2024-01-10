@@ -1,0 +1,49 @@
+.jfx-tab-pane
+{
+-fx-padding: 1px;
+-fx-background-color: #000000 , -fx-control-inner-background;
+-fx-background-insets: 0, 1;
+-fx-font-family: 'Josefin Sans';
+ -fx-font-weight: bold;
+}
+
+  .jfx-tab-pane .headers-region
+{
+-fx-background-color: #000000;
+-fx-background-radius:5 ;
+}
+
+    .jfx-tab-pane .tab-header-background
+{
+-fx-background-color: #000000;
+}
+
+.jfx-tab-pane .tab-header-area .jfx-rippler
+{
+-jfx-rippler-fill: RED;
+}
+
+.jfx-tab-pane .tab-header-area .tab-selected-line{
+-fx-stroke: red;
+-fx-border-color : red;
+}
+
+.jfx-tab-pane .tab .tab-label {
+	
+    -fx-font-weight: normal;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 20;
+}
+
+.jfx-tab-pane .tab:selected .tab-label {
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #2e2f40;
+}
+
+
+
+.anchor {
+    -fx-background-image: url("/images/wallpaper1.jpg");
+    -fx-background-repeat: stretch;   
+    
+}

@@ -1,0 +1,123 @@
+.btn-choose {
+    -fx-font-size: 18px;
+    -fx-pref-width: 200px;
+    -fx-pref-height: 50px;
+    -fx-background-radius: 5;
+    -fx-cursor: hand
+}
+
+.btn {
+    -fx-font-size: 18px;
+    -fx-background-radius: 18;
+    -fx-cursor: hand
+}
+ 
+.dp .text-field {
+    -fx-text-fill: white;
+}
+
+
+.chart {
+
+}
+.chart-content {
+   
+}
+ 
+.chart-title {
+  -fx-text-fill: #4682b4;
+  -fx-font-size: 1.6em;
+}
+ 
+.chart-legend {
+   -fx-background-color:  transparent;
+}
+ 
+ 
+.chart-legend-item{
+    -fx-font-family: 'Josefin Sans';
+    -fx-text-fill: white;
+}
+ 
+.chart-plot-background {
+    -fx-background-color: #323769;
+}
+.chart-vertical-grid-lines {
+    -fx-stroke: #2f3363;
+}
+.chart-horizontal-grid-lines {
+    -fx-stroke: #2f3363;
+}
+.chart-alternative-row-fill {
+    -fx-fill: #373c6e;
+    -fx-stroke: transparent;
+    -fx-stroke-width: 0;
+}
+
+
+.statButton {
+    -fx-background-color:  #10165f;
+    -fx-background-radius: 6px;
+}
+
+.statButton:hover {
+    -fx-background-color:  #1a336e;
+    -fx-background-radius: 12px;
+}
+
+.statButton:focused {
+    -fx-background-color:  #424b99;
+    -fx-background-radius: 9px;
+}
+
+
+.default-color0.chart-area-symbol { -fx-background-color: #f7d7d5, #556a7d; }
+.default-color1.chart-area-symbol { -fx-background-color: #f7d7d5, #172342; }
+ 
+.default-color0.chart-series-area-line { -fx-stroke: #f7d7d5; }
+.default-color1.chart-series-area-line { -fx-stroke: #f7d7d5; }
+ 
+.default-color0.chart-series-area-fill { -fx-fill: rgba(85, 106, 125, 0.5); }
+.default-color1.chart-series-area-fill { -fx-fill: rgba(23, 35, 66, 0.5); }
+
+
+
+.chart-pie-label {
+    -fx-fill: white;
+    -fx-font-family: 'Josefin Sans';
+} 
+
+.chart-legend { 
+    -fx-fill: white;
+    -fx-font-family: 'Josefin Sans';
+    -fx-background-color: #122754; }
+
+
+.default-color0.chart-line-symbol { -fx-background-color: #f7d7d5, #556a7d; }
+.default-color1.chart-line-symbol { -fx-background-color: #f7d7d5, #172342; }
+ 
+.default-color0.chart-series-line { -fx-stroke: #f7d7d5; }
+.default-color1.chart-series-line { -fx-stroke: #f7d7d5; }
+ 
+.default-color0.chart-series-line-fill { -fx-fill: rgba(85, 106, 125, 0.5); }
+.default-color1.chart-series-line-fill { -fx-fill: rgba(23, 35, 66, 0.5); }
+
+
+.myDialog{
+    -fx-background-color: #f9d900;
+}
+.myDialog > *.button-bar > *.container{
+    -fx-background-color: #a9e200;
+}
+.myDialog > *.label.content{
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+.myDialog:header *.header-panel{
+    -fx-background-color: #a59c31;
+}
+.myDialog:header *.header-panel *.label{
+    -fx-font-size: 18px;
+    -fx-font-style: italic;
+    -fx-fill: #292929;
+}

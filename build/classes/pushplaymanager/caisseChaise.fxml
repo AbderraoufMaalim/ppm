@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="737.0" prefWidth="614.0" style="-fx-background-color: #4d341c;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pushplaymanager.CaisseChaiseController">
+   <children>
+      <TextArea fx:id="note" layoutX="10.0" layoutY="210.0" prefHeight="80.0" prefWidth="438.0" styleClass="note2" stylesheets="@../style/Application.css" wrapText="true">
+         <font>
+            <Font name="Arial Black" size="15.0" />
+         </font>
+      </TextArea>
+      <ImageView fitHeight="73.0" fitWidth="72.0" layoutX="-2.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/chair.png" />
+         </image>
+      </ImageView>
+      <Text fx:id="pcTxt" fill="WHITE" layoutX="70.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chaise: 00">
+         <font>
+            <Font name="Josefin Sans Bold" size="28.0" />
+         </font>
+      </Text>
+      <JFXButton layoutX="316.0" layoutY="690.0" onAction="#valide" prefHeight="39.0" prefWidth="110.0" styleClass="chaiseBtn" stylesheets="@../style/Application.css" text="Valider" textFill="WHITE">
+         <font>
+            <Font name="Josefin Sans Regular" size="17.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" iconName="SHOPPING_CART" size="25" />
+         </graphic>
+      </JFXButton>
+      <Pane layoutY="2.0" prefHeight="24.0" prefWidth="521.0" style="-fx-background-color: #331f0c;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Text fill="#dddddd" layoutX="13.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chaise">
+               <font>
+                  <Font name="Josefin Sans Bold" size="12.0" />
+               </font>
+            </Text>
+            <Button layoutX="626.0" layoutY="-9.0" mnemonicParsing="false" onAction="#CloseWindow" prefHeight="24.0" prefWidth="31.0" style="-fx-background-color: transparent;" styleClass="close" stylesheets="@../style/username.css" text="×" textFill="#c6c6c6">
+               <font>
+                  <Font name="Arial" size="22.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <TableView fx:id="tableProduct" layoutX="8.0" layoutY="300.0" prefHeight="380.0" prefWidth="597.0" stylesheets="@../style/table3.css">
+        <columns>
+            <TableColumn fx:id="image" prefWidth="96.0" text="Image" />
+          <TableColumn fx:id="nomProduit" prefWidth="153.0" text="Produit" />
+            <TableColumn fx:id="buyQuant" prefWidth="58.0" text="Quantity" />
+            <TableColumn fx:id="prix" prefWidth="109.0" text="Prix" />
+            <TableColumn fx:id="action" prefWidth="165.0" text="Action" />
+        </columns>
+      </TableView>
+      <JFXButton layoutX="506.0" layoutY="255.0" onAction="#openProductsList" styleClass="chaiseBtn" stylesheets="@../style/Application.css" text="Ajouter" textFill="WHITE">
+         <font>
+            <Font name="Josefin Sans Regular" size="16.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" iconName="PLUS" size="25" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton layoutX="435.0" layoutY="690.0" onAction="#print" prefHeight="39.0" prefWidth="118.0" styleClass="chaiseBtn" stylesheets="@../style/Application.css" text="Imprimer" textFill="WHITE">
+         <font>
+            <Font name="Josefin Sans Regular" size="16.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" iconName="PRINT" size="25" />
+         </graphic>
+      </JFXButton>
+      <HBox layoutX="14.0" layoutY="696.0" prefHeight="34.0" prefWidth="232.0" spacing="4.0">
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Prix total:">
+               <font>
+                  <Font name="Josefin Sans Bold" size="23.0" />
+               </font>
+            </Text>
+            <JFXTextField fx:id="totalPriceText" maxWidth="72.0" minWidth="39.0" prefHeight="37.0" prefWidth="72.0" styleClass="text-field" stylesheets="@../style/Application.css">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXTextField>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="DA">
+               <font>
+                  <Font name="Josefin Sans Bold" size="23.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
+      <JFXButton layoutX="411.0" layoutY="210.0" onAction="#viderNote" stylesheets="@../style/Application.css" text=" " textFill="WHITE">
+         <font>
+            <Font size="1.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIcon fill="#9a2b2b" iconName="TRASH" size="25" text="">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </FontAwesomeIcon>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="removeAll" layoutX="494.0" layoutY="40.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#removeAll" prefHeight="37.0" prefWidth="157.0" styleClass="chaiseBtn" stylesheets="@../style/Application.css" text="Vider la Chaise" textFill="WHITE">
+         <font>
+            <Font name="Josefin Sans Regular" size="16.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" iconName="TRASH" size="25" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <Spinner fx:id="playTimeSpinner" editable="true" layoutX="520.0" layoutY="220.0" prefHeight="31.0" prefWidth="86.0" />
+      <JFXButton layoutX="465.0" layoutY="220.0" onAction="#addPlayTime" prefHeight="27.0" prefWidth="50.0" styleClass="chaiseBtn" stylesheets="@../style/Application.css" text="\$" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" iconName="PLUS" size="18" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <HBox layoutX="10.0" layoutY="158.0" prefHeight="41.0" prefWidth="596.0" spacing="8.0">
+         <children>
+            <JFXButton alignment="CENTER" onAction="#cafe" prefHeight="42.0" prefWidth="34.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="63.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/cafe.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" onAction="#sghira" prefHeight="42.0" prefWidth="34.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="42.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/wa.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" onAction="#teaMaison" prefHeight="42.0" prefWidth="34.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="45.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/thé%20maison.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" onAction="#cappuccino" prefHeight="42.0" prefWidth="34.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="49.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/cappuccino.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" onAction="#cappuccinoM" prefHeight="42.0" prefWidth="34.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="49.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/cappuccinoM.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" onAction="#MilkShake" prefHeight="42.0" prefWidth="34.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="47.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/milk-shake.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" onAction="#cocktail" prefHeight="42.0" prefWidth="34.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="46.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/cocktail.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" onAction="#canette" prefHeight="42.0" prefWidth="34.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="47.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/canette.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" onAction="#canetteG" prefHeight="42.0" prefWidth="51.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="48.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/canetteG.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" onAction="#mokassarat" prefHeight="42.0" prefWidth="34.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/mokassarat.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" onAction="#frittes" prefHeight="42.0" prefWidth="34.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="47.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/frittes.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </children>
+      </HBox>
+      <HBox layoutX="10.0" layoutY="103.0" prefHeight="41.0" prefWidth="596.0" spacing="8.0">
+         <children>
+            <JFXButton alignment="CENTER" onAction="#menthe" prefHeight="45.0" prefWidth="44.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="45.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/fakher.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" onAction="#mixt" prefHeight="45.0" prefWidth="42.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="45.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/magic.PNG" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" onAction="#adalia" prefHeight="47.0" prefWidth="51.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="47.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/Adalia.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" onAction="#crepe" prefHeight="42.0" prefWidth="34.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="42.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/crepe.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" onAction="#pancake" prefHeight="42.0" prefWidth="34.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="43.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/pancakes.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" onAction="#plus3Fruits" prefHeight="42.0" prefWidth="34.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="36.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/fruits.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" layoutX="282.0" layoutY="10.0" onAction="#plusFruit" prefHeight="42.0" prefWidth="34.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/banana.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" layoutX="315.0" layoutY="10.0" onAction="#nutella" prefHeight="42.0" prefWidth="34.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/nutella.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" onAction="#cascade" prefHeight="42.0" prefWidth="34.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="48.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/cascade.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" onAction="#tacos" prefHeight="42.0" prefWidth="34.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="45.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/tacos.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" onAction="#fajitas" prefHeight="42.0" prefWidth="51.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="45.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/fajitas.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" onAction="#cheeseChicken" prefHeight="42.0" prefWidth="34.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="47.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/cheese%20chicken.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton alignment="CENTER" onAction="#cheeseBurger" prefHeight="42.0" prefWidth="34.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../product%20icons/cheese%20burger.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="0.01" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

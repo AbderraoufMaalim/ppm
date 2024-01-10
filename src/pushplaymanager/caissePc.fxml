@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="509.0" prefWidth="617.0" style="-fx-background-color: #824241;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pushplaymanager.CaissePcController">
+   <children>
+      <ImageView fitHeight="64.0" fitWidth="64.0" layoutX="24.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/pc.png" />
+         </image>
+      </ImageView>
+      <Text fx:id="pcTxt" fill="WHITE" layoutX="99.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PC: 00">
+         <font>
+            <Font name="Josefin Sans Bold" size="28.0" />
+         </font>
+      </Text>
+      <Text fx:id="timeDisplay" fill="WHITE" layoutX="33.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00">
+         <font>
+            <Font name="Josefin Sans Bold" size="38.0" />
+         </font>
+      </Text>
+      <Text fx:id="amountDisplay" fill="WHITE" layoutX="33.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="25 DA">
+         <font>
+            <Font name="Josefin Sans Bold" size="38.0" />
+         </font>
+      </Text>
+      <JFXButton disable="true" layoutX="4.0" layoutY="458.0" onAction="#valide" prefHeight="39.0" prefWidth="110.0" styleClass="PcBtn" stylesheets="@../style/Application.css" text="Valider" textFill="WHITE">
+         <font>
+            <Font name="Josefin Sans Regular" size="17.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" iconName="SHOPPING_CART" size="25" />
+         </graphic>
+      </JFXButton>
+      <Pane layoutY="2.0" prefHeight="24.0" prefWidth="749.0" style="-fx-background-color: #632530;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Text fill="#dddddd" layoutX="13.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Caisse Pc">
+               <font>
+                  <Font name="Josefin Sans Bold" size="12.0" />
+               </font>
+            </Text>
+            <Button layoutX="585.0" layoutY="-9.0" mnemonicParsing="false" onAction="#CloseWindow" prefHeight="37.0" prefWidth="32.0" style="-fx-background-color: transparent;" styleClass="close" stylesheets="@../style/username.css" text="×" textFill="#c6c6c6">
+               <font>
+                  <Font name="Arial" size="22.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <TableView fx:id="tableProduct" layoutX="245.0" layoutY="100.0" prefHeight="353.0" prefWidth="370.0">
+        <columns>
+            <TableColumn fx:id="image" prefWidth="56.0" text="Image" />
+          <TableColumn fx:id="nomProduit" prefWidth="72.0" text="Produit" />
+            <TableColumn fx:id="buyQuant" prefWidth="76.0" text="Quantity" />
+            <TableColumn fx:id="prix" prefWidth="77.0" text="Prix" />
+            <TableColumn fx:id="action" prefWidth="88.0" text="Action" />
+        </columns>
+      </TableView>
+      <JFXButton layoutX="508.0" layoutY="54.0" onAction="#openProductsList" styleClass="PcBtn" stylesheets="@../style/Application.css" text="Ajouter" textFill="WHITE">
+         <font>
+            <Font name="Josefin Sans Regular" size="16.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" iconName="PLUS" size="25" />
+         </graphic>
+      </JFXButton>
+      <JFXButton disable="true" layoutX="119.0" layoutY="458.0" onAction="#print" prefHeight="39.0" prefWidth="120.0" styleClass="PcBtn" stylesheets="@../style/Application.css" text="Imprimer" textFill="WHITE">
+         <font>
+            <Font name="Josefin Sans Regular" size="16.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" iconName="PRINT" size="25" />
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="sessionStart" layoutX="160.0" layoutY="121.0" onAction="#demarrer" text=" ">
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" iconName="PLAY" size="25" />
+         </graphic>
+         <font>
+            <Font size="1.0" />
+         </font></JFXButton>
+      <JFXButton fx:id="sessionStop" disable="true" layoutX="160.0" layoutY="160.0" onAction="#arreter" prefHeight="25.0" prefWidth="27.0" text=" ">
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" iconName="STOP" size="25" />
+         </graphic>
+         <font>
+            <Font size="1.0" />
+         </font>
+      </JFXButton>
+      <Text fx:id="secondsDisplay" fill="WHITE" layoutX="105.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="31">
+         <font>
+            <Font name="Tw Cen MT" size="22.0" />
+         </font>
+      </Text>
+      <HBox alignment="CENTER" layoutX="5.0" layoutY="394.0" prefHeight="50.0" prefWidth="209.0" spacing="4.0">
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Prix total:">
+               <font>
+                  <Font name="Josefin Sans Bold" size="23.0" />
+               </font>
+            </Text>
+            <JFXTextField fx:id="totalPriceText" maxWidth="72.0" minWidth="39.0" prefHeight="37.0" prefWidth="72.0" styleClass="text-field" stylesheets="@../style/Application.css">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </JFXTextField>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="DA">
+               <font>
+                  <Font name="Josefin Sans Bold" size="23.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
+      <HBox layoutX="245.0" layoutY="466.0" prefHeight="24.0" prefWidth="200.0" spacing="5.0">
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Consommations:">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Text>
+            <Text fx:id="totalCons" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="00">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="168.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DA">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

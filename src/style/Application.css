@@ -1,0 +1,181 @@
+
+
+
+
+#search { 
+    -fx-background-color: rgba(255,255,255,0.0);
+    -fx-background-radius: 15 15 15 15;
+    -fx-background-insets: 6 6 6 6 ;
+    -fx-text-fill: rgba(0,0,0,0.7);
+    -fx-font: 20pt Arial;
+}
+
+.jfx-date-picker .jfx-text-field{
+    -jfx-unfocus-color: red;
+    -fx-font: 16pt Impact;
+    -fx-font-weight: bold;
+}
+
+
+.jfx-tab-pane .tab-header-background { -fx-background-color: #36474F; }
+
+
+
+.pcPaneOn{
+-fx-background-color:  #57ab6f;
+}
+
+.pcPaneOn:hover{
+ -fx-background-color: #4f9c65;
+}
+
+
+
+.pcPaneOff{
+    -fx-background-color:  #cc142d;
+}
+
+.pcPaneOff:hover{
+    -fx-background-color:  #b51027;
+
+}
+
+
+.pcPanePause{
+    -fx-background-color:  #db9200;
+}
+
+.pcPanePause:hover{
+-fx-background-color: #c98804;
+}
+
+.PcBtn {
+    -fx-background-color:   #632530;
+}
+
+
+.PcBtn:hover{
+    -fx-background-color:  #450812;
+}
+
+
+
+.psPaneOn{
+-fx-background-color:  #487369;
+}
+
+.psPaneOn:hover{
+ -fx-background-color: #334a45;
+}
+
+
+
+.psPaneOff{
+    -fx-background-color:  #a10e0e;
+}
+
+.psPaneOff:hover{
+    -fx-background-color:  #850505;
+
+}
+
+
+
+.psPanePause{
+    -fx-background-color:  #c96f00;
+}
+
+.psPanePause:hover{
+-fx-background-color: #ad640a;
+}
+
+.PsBtn {
+    -fx-background-color:  #21403e;
+}
+
+
+.PsBtn:hover{
+    -fx-background-color:  #1a4744;
+}
+
+.tablePane{
+    -fx-background-color:  #5e3638;
+}
+.tablePane:hover{
+    -fx-background-color:  #452627;
+}
+
+.tableBtn {
+    -fx-background-color:  #7d3333;
+}
+
+
+.tableBtn:hover{
+    -fx-background-color:  #942525;
+}
+
+.chaisePane{
+    -fx-background-color:  #ad8257;
+}
+.chaisePane:hover{
+    -fx-background-color:  #8f6d4a;
+}
+
+.chaiseBtn {
+    -fx-background-color:  #694613;
+}
+
+
+.chaiseBtn:hover{
+    -fx-background-color:  #91672a;
+}
+
+
+.cursorHand{
+    -fx-cursor: hand;
+}
+
+
+.text-field{
+    -fx-text-fill: white;
+}
+
+
+.note {
+    -fx-font-family: Consolas;
+    -fx-font-size: 15;
+    -fx-text-fill: #ffffff;
+    -fx-display-caret:true;
+    -fx-font-weight: bold;
+}
+
+.note .content{
+    -fx-background-color:  #3d1a1a;
+}
+
+.note2 {
+    -fx-font-family: Consolas;
+    -fx-font-size: 15;
+    -fx-text-fill: #ffffff;
+    -fx-display-caret:true;
+    -fx-font-weight: bold;
+}
+
+.note2 .content{
+    -fx-background-color:   #331f0c;
+}
+
+
+.note3 {
+    -fx-font-family: Consolas;
+    -fx-font-size: 15;
+    -fx-text-fill: #ffffff;
+    -fx-display-caret:true;
+    -fx-font-weight: bold;
+}
+
+.note3 .content{
+    -fx-background-color:   #121938;
+}
+
+

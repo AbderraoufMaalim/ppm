@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="anchor3" prefHeight="586.0" prefWidth="971.0" style="-fx-background-color: #0e0e21;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pushplaymanager.HistoriqueController">
+   <children>
+      <HBox layoutX="6.0" layoutY="57.0" prefHeight="30.0" prefWidth="345.0">
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Recette:  ">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Text>
+            <Text fx:id="recette" fill="#018003" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="DA">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="مداخيل:  ">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
+      <Text fill="WHITE" layoutX="14.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Historique ">
+         <font>
+            <Font name="Leelawadee Bold" size="34.0" />
+         </font>
+      </Text>
+      <TableView fx:id="tableSessions" layoutX="14.0" layoutY="144.0" prefHeight="286.0" prefWidth="946.0" stylesheets="@../style/table4.css">
+         <columns>
+            <TableColumn fx:id="id" prefWidth="47.0" text="Num°" />
+            <TableColumn fx:id="date" prefWidth="119.0" text="Date" />
+            <TableColumn fx:id="time" prefWidth="81.0" text="Heure" />
+            <TableColumn fx:id="type" prefWidth="68.0" text="Type" />
+            <TableColumn fx:id="num" prefWidth="68.0" text="N° Poste" />
+            <TableColumn fx:id="payment" prefWidth="93.0" text="Paiement " />
+            <TableColumn fx:id="note" minWidth="0.0" prefWidth="339.0" text="Commentaire" />
+            <TableColumn fx:id="actions" prefWidth="110.0" text="Actions" />
+         </columns>
+      </TableView>
+      <JFXButton layoutX="849.0" layoutY="79.0" onAction="#refresh" prefHeight="30.0" prefWidth="108.0" text="Refresh" textFill="WHITE" visible="false">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" size="18" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXDatePicker fx:id="datePicker" defaultColor="#b6c7ff" layoutX="220.0" layoutY="9.0" onAction="#dateSearch" prefHeight="48.0" prefWidth="195.0" stylesheets="@../style/Application.css">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXDatePicker>
+      <JFXButton alignment="TOP_LEFT" layoutX="474.0" layoutY="11.0" onAction="#lyoum" prefHeight="48.0" prefWidth="117.0" styleClass="statBtn" stylesheets="@../style/newStyle.css" text=" Aujourd'hui" textFill="WHITE">
+         <font>
+            <Font name="Leelawadee Bold" size="13.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" iconName="TABLE" size="18" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         
+      </JFXButton>
+      <Text fx:id="lyoum" disable="true" fill="WHITE" layoutX="497.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="01/08/2021">
+         <font>
+            <Font name="Leelawadee Bold" size="14.0" />
+         </font>
+      </Text>
+      <VBox layoutX="473.0" layoutY="74.0" prefHeight="17.0" prefWidth="250.0" spacing="2.0">
+         <children>
+            <HBox prefHeight="23.0" prefWidth="250.0" spacing="5.0">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Chicha:">
+                     <font>
+                        <Font name="Leelawadee Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="chichaTxt" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="46">
+                     <font>
+                        <Font name="Leelawadee Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="  Menthe:">
+                     <font>
+                        <Font name="Leelawadee Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="mintTxt" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="46">
+                     <font>
+                        <Font name="Leelawadee Bold" size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Boisson:" wrappingWidth="60.8359375">
+                     <font>
+                        <Font name="Leelawadee Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="boissonTxt" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="50">
+                     <font>
+                        <Font name="Leelawadee Bold" size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <JFXButton alignment="TOP_CENTER" layoutX="599.0" layoutY="10.0" onAction="#lbareh" prefHeight="48.0" prefWidth="117.0" styleClass="statBtn" stylesheets="@../style/newStyle.css" text=" Hier" textFill="WHITE">
+         <font>
+            <Font name="Leelawadee Bold" size="13.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" iconName="TABLE" size="18" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <Text fx:id="lbareh" disable="true" fill="WHITE" layoutX="618.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="01/08/2021">
+         <font>
+            <Font name="Leelawadee Bold" size="14.0" />
+         </font>
+      </Text>
+      <TableView fx:id="tableDep" layoutX="14.0" layoutY="440.0" prefHeight="145.0" prefWidth="946.0" stylesheets="@../style/table5.css">
+         <columns>
+            <TableColumn fx:id="idDep" prefWidth="47.0" text="Num°" />
+            <TableColumn fx:id="dateDep" prefWidth="119.0" text="Date" />
+            <TableColumn fx:id="timeDep" prefWidth="81.0" text="Heure" visible="false" />
+            <TableColumn fx:id="montantDep" prefWidth="93.0" text="Montant" />
+            <TableColumn fx:id="noteDep" minWidth="0.0" prefWidth="559.0" text="Commentaire" />
+            <TableColumn fx:id="actionsDep" prefWidth="106.0" text="Actions" />
+         </columns>
+      </TableView>
+      <JFXButton contentDisplay="TOP" graphicTextGap="0.0" layoutX="860.0" layoutY="12.0" onAction="#openDep" prefHeight="93.0" prefWidth="97.0" styleClass="tableBtn" stylesheets="@../style/Application.css" text="Ajouter&#10;Dépense&#10;مصاريف" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Leelawadee Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" iconName="MINUS" size="28" />
+         </graphic>
+      </JFXButton>
+      <HBox layoutX="6.0" layoutY="80.0" prefHeight="30.0" prefWidth="345.0">
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Dépense:  ">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Text>
+            <Text fx:id="depTxt" fill="#ff3d3d" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="DA">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="مصاريف:  ">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
+      <HBox layoutX="6.0" layoutY="104.0" prefHeight="30.0" prefWidth="345.0">
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Net:  ">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Text>
+            <Text fx:id="netTxt" fill="#fff600" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="DA">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="الصافي:  ">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
+      <JFXButton alignment="CENTER" contentDisplay="RIGHT" layoutX="418.0" layoutY="22.0" onAction="#nextDate" prefHeight="28.0" prefWidth="29.0" styleClass="statBtn" stylesheets="@../style/newStyle.css" text=" " textFill="WHITE">
+         <font>
+            <Font name="Leelawadee Bold" size="0.1" />
+         </font>
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" iconName="ARROW_CIRCLE_RIGHT" size="18" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton alignment="CENTER" contentDisplay="RIGHT" layoutX="194.0" layoutY="22.0" onAction="#previousDate" prefHeight="28.0" prefWidth="29.0" styleClass="statBtn" stylesheets="@../style/newStyle.css" text=" " textFill="WHITE">
+         <font>
+            <Font name="Leelawadee Bold" size="0.1" />
+         </font>
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" iconName="ARROW_CIRCLE_LEFT" size="18" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+   </children>
+</AnchorPane>

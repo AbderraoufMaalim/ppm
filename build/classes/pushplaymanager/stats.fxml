@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="586.0" prefWidth="971.0" style="-fx-background-color: #0e0e21;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pushplaymanager.StatsController">
+   <children>
+      <Text fill="WHITE" layoutX="21.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Statistiques">
+         <font>
+            <Font name="Leelawadee Bold" size="34.0" />
+         </font>
+      </Text>
+      <HBox layoutX="23.0" layoutY="71.0" prefHeight="42.0" prefWidth="331.0">
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Selectionner:">
+               <font>
+                  <Font name="Leelawadee" size="24.0" />
+               </font>
+            </Text>
+            <JFXRadioButton contentDisplay="TOP" onAction="#moisRadio" prefHeight="29.0" prefWidth="81.0" selected="true" text="Par Mois" textFill="WHITE">
+               <toggleGroup>
+                  <ToggleGroup fx:id="a" />
+               </toggleGroup>
+               <font>
+                  <Font name="Leelawadee" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXRadioButton>
+            <JFXRadioButton onAction="#periodeRadio" prefHeight="29.0" prefWidth="92.0" text="Par Periode" textFill="WHITE" toggleGroup="$a">
+               <font>
+                  <Font name="Leelawadee" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXRadioButton>
+         </children>
+      </HBox>
+      <HBox fx:id="parPeriode" layoutX="23.0" layoutY="111.0" prefHeight="29.0" prefWidth="400.0" visible="false">
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="De:">
+               <font>
+                  <Font name="Leelawadee" size="24.0" />
+               </font>
+            </Text>
+            <JFXDatePicker defaultColor="#50e4d5" prefHeight="31.0" prefWidth="158.0" />
+            <Text fill="WHITE" layoutX="10.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="À:">
+               <font>
+                  <Font name="Leelawadee" size="24.0" />
+               </font>
+            </Text>
+            <JFXDatePicker defaultColor="#2df5e1" prefHeight="31.0" prefWidth="158.0" />
+            <JFXButton alignment="CENTER" contentDisplay="CENTER" prefHeight="26.0" prefWidth="27.0" styleClass="statBtn" stylesheets="@../style/newStyle.css" text=" " textFill="WHITE">
+               <font>
+                  <Font name="Leelawadee Bold" size="0.0011" />
+               </font>
+               <graphic>
+                  <FontAwesomeIcon fill="WHITE" iconName="SEARCH" size="16" />
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </children>
+      </HBox>
+      <HBox fx:id="parMois" layoutX="25.0" layoutY="112.0" prefHeight="29.0" prefWidth="423.0" spacing="10.0">
+         <children>
+            <ChoiceBox fx:id="monthChoice" prefWidth="150.0" />
+            <Spinner fx:id="yearSpinner" />
+         </children>
+      </HBox>
+      <VBox layoutX="25.0" layoutY="251.0" prefHeight="101.0" prefWidth="100.0" spacing="5.0" visible="false">
+         <children>
+            <ToggleButton mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" styleClass="statBtn" stylesheets="@../style/newStyle.css" text="Recettes" textFill="WHITE">
+               <toggleGroup>
+                  <ToggleGroup fx:id="b" />
+               </toggleGroup>
+               <font>
+                  <Font name="Leelawadee Bold" size="14.0" />
+               </font>
+            </ToggleButton>
+            <ToggleButton mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" styleClass="statBtn" stylesheets="@../style/newStyle.css" text="Chicha" textFill="WHITE" toggleGroup="$b">
+               <font>
+                  <Font name="Leelawadee Bold" size="14.0" />
+               </font>
+            </ToggleButton>
+            <ToggleButton mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" styleClass="statBtn" stylesheets="@../style/newStyle.css" text="Recettes" textFill="WHITE">
+               <toggleGroup>
+                  <ToggleGroup fx:id="b1" />
+               </toggleGroup>
+               <font>
+                  <Font name="Leelawadee Bold" size="14.0" />
+               </font>
+            </ToggleButton>
+            <ToggleButton mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" styleClass="statBtn" stylesheets="@../style/newStyle.css" text="Chicha" textFill="WHITE">
+               <toggleGroup>
+                  <ToggleGroup fx:id="b1" />
+               </toggleGroup>
+               <font>
+                  <Font name="Leelawadee Bold" size="14.0" />
+               </font>
+            </ToggleButton>
+         </children></VBox>
+      <LineChart fx:id="chart" layoutX="29.0" layoutY="198.0" prefHeight="345.0" prefWidth="925.0" stylesheets="@../style/alert.css">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </LineChart>
+      <VBox layoutX="419.0" layoutY="70.0" prefHeight="55.0" prefWidth="247.0">
+         <children>
+            <HBox prefHeight="30.0" prefWidth="345.0">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Recette:  ">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Text fx:id="recette" fill="#018003" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="DA">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="مداخيل:  ">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+            </HBox>
+            <HBox prefHeight="30.0" prefWidth="345.0">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Dépense:  ">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Text fx:id="depTxt" fill="#ff3d3d" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="DA">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="مصاريف:  ">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+            </HBox>
+            <HBox prefHeight="30.0" prefWidth="345.0">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Net:  ">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Text fx:id="netTxt" fill="#fff600" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="DA">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="الصافي:  ">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

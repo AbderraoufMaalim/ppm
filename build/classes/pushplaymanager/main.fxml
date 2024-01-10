@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="1143.0" style="-fx-background-color: #1d1d36;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pushplaymanager.MainController">
+   <center>
+      <AnchorPane fx:id="anchor" prefHeight="595.0" prefWidth="973.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="5.0" right="5.0" top="80.0" />
+         </BorderPane.margin>
+         <children>
+            <AnchorPane fx:id="anchor4" prefHeight="586.0" prefWidth="971.0" />
+            <AnchorPane fx:id="anchor2" prefHeight="584.0" prefWidth="969.0" />
+            <AnchorPane fx:id="anchor3" prefHeight="586.0" prefWidth="971.0" />
+            <AnchorPane fx:id="anchor5" prefHeight="586.0" prefWidth="971.0" />
+         </children>
+      </AnchorPane>
+   </center>
+   <left>
+      <VBox alignment="TOP_CENTER" prefHeight="671.0" prefWidth="168.0" spacing="23.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="70.0" prefWidth="160.0" style="-fx-background-color: #1d1d36;">
+               <children>
+                  <ImageView fitHeight="69.0" fitWidth="61.0" layoutX="15.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/Webp.net-resizeimage.png" />
+                     </image>
+                  </ImageView>
+               </children></Pane>
+            <JFXButton fx:id="btnMedecin" contentDisplay="TOP" onAction="#openDashboard" prefHeight="90.0" prefWidth="100.0" styleClass="MainButton" stylesheets="@../style/username.css" text="Dashboard" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font name="Calibri Light" size="15.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIcon fill="WHITE" iconName="GAMEPAD" nodeOrientation="LEFT_TO_RIGHT" size="34" textAlignment="CENTER" wrappingWidth="39.428571701049805" />
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnHistorique" contentDisplay="TOP" layoutX="10.0" layoutY="58.0" onAction="#openHistoriqueVisite" prefHeight="90.0" prefWidth="100.0" styleClass="MainButton" stylesheets="@../style/username.css" text="Stock" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets right="1.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Calibri Light" size="15.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIcon fill="WHITE" iconName="ARCHIVE" size="30" />
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnVisite" contentDisplay="TOP" layoutX="10.0" layoutY="10.0" onAction="#openVisite" prefHeight="90.0" prefWidth="100.0" styleClass="MainButton" stylesheets="@../style/username.css" text="Historique">
+               <graphic>
+                  <ImageView fitHeight="42.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/records.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets right="1.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Calibri Light" size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnPatient" contentDisplay="TOP" layoutX="10.0" layoutY="106.0" prefHeight="90.0" prefWidth="100.0" styleClass="MainButton" stylesheets="@../style/username.css" text="Clients">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/gamer.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets right="1.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Calibri Light" size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnRecette" alignment="CENTER" contentDisplay="TOP" layoutX="10.0" layoutY="154.0" onAction="#openRecettes" prefHeight="90.0" prefWidth="100.0" styleClass="MainButton" stylesheets="@../style/username.css" text="Statistiques" textAlignment="CENTER">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/accounting.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets right="1.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Calibri Light" size="15.0" />
+               </font>
+            </JFXButton>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </left>
+   <top>
+      <Pane prefHeight="24.0" prefWidth="749.0" style="-fx-background-color: #0d0d26;" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="bonjour" alignment="CENTER_RIGHT" layoutX="646.0" layoutY="29.0" prefHeight="64.0" prefWidth="435.0" text="Bonjour Madani" textAlignment="RIGHT" textFill="#d7d7d7">
+               <font>
+                  <Font name="Josefin Sans Bold" size="18.0" />
+               </font>
+            </Label>
+            <Text fill="#dddddd" layoutX="32.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu Principale">
+               <font>
+                  <Font name="Josefin Sans Bold" size="12.0" />
+               </font></Text>
+            <Button layoutX="1106.0" layoutY="-9.0" mnemonicParsing="false" onAction="#exit" prefHeight="37.0" prefWidth="32.0" style="-fx-background-color: transparent;" styleClass="close" stylesheets="@../style/username.css" text="×" textFill="#c6c6c6">
+               <font>
+                  <Font name="Arial" size="22.0" />
+               </font>
+            </Button>
+            <MenuButton fx:id="setting" layoutX="1085.0" layoutY="34.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" popupSide="TOP" prefHeight="48.0" prefWidth="0.0" style="-fx-background-color: #1d1d36;" textAlignment="RIGHT" textFill="#d7d7d7">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#SettingsButtonsAction" text="Aide" />
+                  <MenuItem mnemonicParsing="false" onAction="#SettingsButtonsAction" text="Feedback" />
+                  <MenuItem mnemonicParsing="false" onAction="#SettingsButtonsAction" text="Contact " />
+                <MenuItem mnemonicParsing="false" onAction="#AboutButtonsAction" text="A propos " />
+              </items>
+               <graphic>
+                  <FontAwesomeIcon fill="#d7d7d7" iconName="COG" size="30" />
+               </graphic>
+            </MenuButton>
+            <Button layoutX="1083.0" layoutY="-16.0" mnemonicParsing="false" onAction="#minimize" prefHeight="41.0" prefWidth="37.0" style="-fx-background-color: transparent;" styleClass="close" stylesheets="@../style/username.css" text="_" textFill="#c6c6c6">
+               <font>
+                  <Font name="Arial Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button contentDisplay="CENTER" graphicTextGap="1.0" layoutX="980.0" layoutY="68.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="108.0" style="-fx-background-color: transparent;" styleClass="close" stylesheets="@../style/username.css" text=" " textFill="#c6c6c6">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <padding>
+                  <Insets bottom="-10.0" left="-10.0" right="-10.0" top="-10.0" />
+               </padding>
+               <graphic>
+                  <Label style="-fx-underline: true;" text="Se déconnecter" textFill="#e8e8e8">
+                     <font>
+                        <Font name="Josefin Sans Regular" size="13.0" />
+                     </font>
+                  </Label>
+               </graphic>
+            </Button>
+            <ImageView fitHeight="14.0" fitWidth="454.0" layoutX="83.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/slim-play.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </top>
+</BorderPane>
