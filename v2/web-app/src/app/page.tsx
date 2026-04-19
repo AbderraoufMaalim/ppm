@@ -962,7 +962,7 @@ export default function Home() {
                         setSelectedStation(station);
                         setShowCancelModal(true);
                       }}>
-                        ⏹️
+                        🛑
                       </button>
                     </>
                   )}
@@ -2013,7 +2013,7 @@ export default function Home() {
       <div className="modal-overlay" onClick={() => setShowCancelModal(false)}>
         <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 450 }}>
           <div className="modal-header">
-            <div className="modal-title">⏹️ Arrêter le poste</div>
+            <div className="modal-title">🛑 Arrêter le poste</div>
             <button className="modal-close" onClick={() => setShowCancelModal(false)}>✕</button>
           </div>
           <div className="modal-body">
