@@ -1,0 +1,10 @@
+# Database data
+v2/db-data/
+
+# Next.js
+v2/web-app/.next/
+v2/web-app/node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db

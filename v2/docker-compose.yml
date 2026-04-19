@@ -1,0 +1,26 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: ppm-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: pushplay
+      MYSQL_USER: ppm_user
+      MYSQL_PASSWORD: ppm_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ppm-network
+
+networks:
+  ppm-network:
+    driver: bridge
