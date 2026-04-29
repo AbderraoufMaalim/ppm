@@ -38,7 +38,9 @@ export function getAuthCookieOptions(maxAge?: number) {
   return {
     name: COOKIE_NAME,
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    // On met secure à false car l'app est accédée en local via HTTP (192.168.x.x)
+    // Cloudflare s'occupe déjà de chiffrer le trafic distant via le tunnel.
+    secure: false,
     sameSite: 'lax' as const,
     path: '/',
     maxAge: maxAge ?? 60 * 60 * 24, // 24 hours

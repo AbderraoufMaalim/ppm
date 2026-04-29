@@ -5,6 +5,19 @@ v2/db-data/
 v2/web-app/.next/
 v2/web-app/node_modules/
 
+# Secrets (CRITIQUE — ne jamais commiter)
+v2/.env
+.env
+
+# Backups
+v2/backups/
+
+# Logs
+v2/logs/
+
+# Scratch scripts
+scratch/
+
 # OS files
 .DS_Store
 Thumbs.db

@@ -7,7 +7,7 @@ import { RowDataPacket, ResultSetHeader } from 'mysql2';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { session_id, minutes, tab_index = 1 } = body;
+    const { session_id, minutes, tab_index = 1, custom_rate_per_hour } = body;
 
     if (!session_id || !minutes || minutes <= 0) {
       return NextResponse.json({ error: 'session_id et minutes (> 0) sont requis' }, { status: 400 });
@@ -26,7 +26,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Session active ou en pause introuvable' }, { status: 404 });
     }
 
-    const ratePerHour = Number(sessions[0].default_rate_per_hour);
+    let ratePerHour = Number(sessions[0].default_rate_per_hour);
+    if (custom_rate_per_hour !== undefined && custom_rate_per_hour !== null) {
+      ratePerHour = Number(custom_rate_per_hour);
+    }
     const ratePerMinute = Math.round((ratePerHour / 60) * 100) / 100;
 
     // Trouver le produit système "Temps de jeu"

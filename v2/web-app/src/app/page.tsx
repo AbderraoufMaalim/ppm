@@ -21,6 +21,7 @@ interface Station {
   fetched_at?: number;
   orders_total_cost?: number;
   transferred_minutes?: number;
+  display_order?: number;
 }
 
 interface DashboardStats {
@@ -129,7 +130,7 @@ function formatCurrency(amount: number): string {
 export default function Home() {
   const router = useRouter();
   const [user, setUser] = useState<{username: string, role: string, image_url?: string} | null>(null);
-  const [currentPage, setCurrentPage] = useState<'dashboard' | 'products' | 'team'>('dashboard');
+  const [currentPage, setCurrentPage] = useState<'dashboard' | 'products' | 'team' | 'postes'>('dashboard');
   const [stations, setStations] = useState<Station[]>([]);
   const [dashboardStats, setDashboardStats] = useState<DashboardStats | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
@@ -150,6 +151,7 @@ export default function Home() {
   const [tabCount, setTabCount] = useState(1);
   const [showGameTimeModal, setShowGameTimeModal] = useState(false);
   const [gameTimeMinutes, setGameTimeMinutes] = useState(30);
+  const [customGameTimeRate, setCustomGameTimeRate] = useState<number | ''>('');
   
   // Merge tabs state
   const [isMergeMode, setIsMergeMode] = useState(false);
@@ -174,6 +176,12 @@ export default function Home() {
   const [showEditUserModal, setShowEditUserModal] = useState(false);
   const [showDeleteUserModal, setShowDeleteUserModal] = useState(false);
   const [selectedTeamUser, setSelectedTeamUser] = useState<UserAccount | null>(null);
+
+  // Backoffice Postes
+  const [showAddStationModal, setShowAddStationModal] = useState(false);
+  const [showEditStationModal, setShowEditStationModal] = useState(false);
+  const [showDeleteStationModal, setShowDeleteStationModal] = useState(false);
+  const [selectedEditStation, setSelectedEditStation] = useState<Station | null>(null);
 
   // Backoffice products
   const [showAddProductCatalogModal, setShowAddProductCatalogModal] = useState(false);
@@ -726,12 +734,17 @@ export default function Home() {
     }
   };
 
-  const addGameTime = async (sessionId: number, minutes: number) => {
+  const addGameTime = async (sessionId: number, minutes: number, customRate?: number | '') => {
     try {
       const res = await fetch('/api/orders/gametime', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ session_id: sessionId, minutes, tab_index: activeTab }),
+        body: JSON.stringify({ 
+          session_id: sessionId, 
+          minutes, 
+          tab_index: activeTab,
+          ...(customRate !== '' && customRate !== undefined ? { custom_rate_per_hour: customRate } : {})
+        }),
       });
       if (!res.ok) throw new Error('Failed');
       showToast(`⏱️ ${minutes} min de jeu ajoutées`, 'success');
@@ -780,13 +793,22 @@ export default function Home() {
         </button>
 
         {user?.role === 'ADMIN' && (
-          <button 
-            className={`nav-item ${currentPage === 'team' ? 'active' : ''}`}
-            onClick={() => setCurrentPage('team')}
-          >
-            <span className="nav-icon">👥</span>
-            Équipe
-          </button>
+          <>
+            <button 
+              className={`nav-item ${currentPage === 'postes' ? 'active' : ''}`}
+              onClick={() => setCurrentPage('postes')}
+            >
+              <span className="nav-icon">🛠️</span>
+              Postes
+            </button>
+            <button 
+              className={`nav-item ${currentPage === 'team' ? 'active' : ''}`}
+              onClick={() => setCurrentPage('team')}
+            >
+              <span className="nav-icon">👥</span>
+              Équipe
+            </button>
+          </>
         )}
 
         <div className="nav-section-label">Système</div>
@@ -837,6 +859,7 @@ export default function Home() {
       dashboard: { title: '📊 Dashboard', subtitle: 'Vue d\'ensemble de votre activité (PlayStation)' },
       products: { title: '🛒 Produits', subtitle: 'Carte et inventaire' },
       team: { title: '👥 Équipe', subtitle: 'Gérer les employés et les rôles' },
+      postes: { title: '🛠️ Postes', subtitle: 'Gérer les PlayStations, tables et chaises' },
     };
     const current = titles[currentPage] || titles['dashboard'];
 
@@ -855,121 +878,190 @@ export default function Home() {
 
   // ─── Render: Dashboard Page ───────────────────────
   const renderDashboard = () => {
+    const renderStationCard = (station: Station, showTimer: boolean) => {
+      const isOccupied = !!station.active_session_id;
+      const isPaused = station.session_status === 'PAUSED';
+      let cardClass = 'station-card';
+      let statusText = 'Libre';
+      if (isOccupied) {
+        if (isPaused) {
+          cardClass += ' paused';
+          statusText = 'En pause';
+        } else {
+          cardClass += ' active';
+          statusText = 'Occupé';
+          if (showTimer) statusText = 'En cours';
+        }
+      }
+
+      return (
+        <div
+          key={station.id}
+          className={cardClass}
+          style={{
+            display: 'flex', flexDirection: 'column', padding: '20px',
+            borderTop: isOccupied ? (isPaused ? '4px solid var(--accent-orange)' : '4px solid var(--accent-green)') : '4px solid transparent',
+            background: isOccupied ? (isPaused ? 'rgba(255, 152, 0, 0.05)' : 'rgba(76, 175, 80, 0.05)') : 'var(--bg-glass)',
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div className="station-icon" style={{ fontSize: '2rem', background: 'rgba(255,255,255,0.1)', padding: 12, borderRadius: '50%' }}>
+                {getStationIcon(station.type)}
+              </div>
+              <div>
+                <div className="station-name" style={{ fontSize: '1.4rem' }}>{station.name}</div>
+                {station.default_rate_per_hour > 0 && (
+                   <div className="station-type">{station.default_rate_per_hour} DA/h</div>
+                )}
+              </div>
+            </div>
+            <div>
+              {isOccupied ? (
+                <span className={`badge ${isPaused ? 'badge-idle' : 'badge-active'}`} style={{ 
+                  background: isPaused ? 'rgba(255, 152, 0, 0.2)' : 'rgba(76, 175, 80, 0.2)', 
+                  color: isPaused ? 'var(--accent-orange)' : 'var(--accent-green)' 
+                }}>
+                  {statusText}
+                </span>
+              ) : (
+                <span className="badge badge-idle">Libre</span>
+              )}
+            </div>
+          </div>
+
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: 80 }}>
+            {isOccupied ? (
+              <>
+                {showTimer ? (
+                  <>
+                    <div style={{ fontSize: '2.5rem', fontWeight: 800, color: isPaused ? 'var(--accent-orange)' : 'var(--accent-green)', fontVariantNumeric: 'tabular-nums', lineHeight: 1 }}>
+                      {formatDuration(station)}
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 8 }}>
+                      <div style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
+                        {formatCurrency(calculateCost(station))} DA
+                      </div>
+                      {Number(station.orders_total_cost) > 0 && (
+                        <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: 2, fontStyle: 'italic' }}>
+                          + {formatCurrency(Number(station.orders_total_cost))} DA consos
+                        </div>
+                      )}
+                    </div>
+                  </>
+                ) : (
+                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                     <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--accent-green)' }}>
+                       Session Active
+                     </div>
+                     {(Number(station.orders_total_cost) > 0 || calculateCost(station) > 0) && (
+                       <div style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', marginTop: 8 }}>
+                         Total: {formatCurrency(calculateCost(station) + Number(station.orders_total_cost))} DA
+                       </div>
+                     )}
+                   </div>
+                )}
+              </>
+            ) : (
+              <div style={{ color: 'var(--text-muted)' }}>Poste prêt</div>
+            )}
+          </div>
+
+          {/* Boutons d'action unifiés */}
+          <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
+            {!isOccupied ? (
+              <button className="btn btn-success" style={{ flex: 1 }} onClick={() => startSession(station.id)}>
+                ▶ Start
+              </button>
+            ) : (
+              <>
+                {showTimer && (
+                  isPaused ? (
+                    <button className="btn btn-primary" style={{ flex: 1 }} onClick={() => resumeSession(station.active_session_id!)}>
+                      ▶ Reprendre
+                    </button>
+                  ) : (
+                    <button className="btn btn-warning" style={{ flex: 1, background: 'rgba(255, 152, 0, 0.1)', color: 'var(--accent-orange)' }} onClick={() => pauseSession(station.active_session_id!)}>
+                      ⏸ Pause
+                    </button>
+                  )
+                )}
+                
+                <button className="btn btn-ghost" style={{ padding: '0 12px', flex: showTimer ? undefined : 1 }} onClick={() => setSelectedStation(station)}>
+                  🛒 {showTimer ? '' : 'Gérer'}
+                </button>
+
+                <button className="btn btn-danger" style={{ padding: '0 12px', background: 'rgba(255, 82, 82, 0.1)', color: 'var(--accent-red)' }} onClick={() => {
+                  setSelectedStation(station);
+                  setShowCancelModal(true);
+                }}>
+                  🛑
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      );
+    };
+
+    const psStations = stations.filter(s => s.type === 'PS_NORMAL' || s.type === 'PS_MULTI');
+    const tables = stations.filter(s => s.type === 'TABLE');
+    const chairs = stations.filter(s => s.type === 'CHAIR');
+    const others = stations.filter(s => s.type === 'OTHER' || s.type === 'PC');
+
     return (
       <div className="page">
-
         <div className="section-header" style={{ marginTop: 28 }}>
           <div>
             <div className="section-title">Contrôle des Postes</div>
             <div className="section-subtitle">{stations.filter(s => s.active_session_id).length} sessions en cours</div>
           </div>
         </div>
-        <div className="stations-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
-          {stations.map((station) => {
-            const isOccupied = !!station.active_session_id;
-            const isPaused = station.session_status === 'PAUSED';
-            let cardClass = 'station-card';
-            let statusText = 'Libre';
-            if (isOccupied) {
-              if (isPaused) {
-                cardClass += ' paused';
-                statusText = 'En pause';
-              } else {
-                cardClass += ' active';
-                statusText = 'En cours';
-              }
-            }
 
-            return (
-              <div
-                key={station.id}
-                className={cardClass}
-                style={{
-                  display: 'flex', flexDirection: 'column', padding: '20px',
-                  borderTop: isOccupied ? (isPaused ? '4px solid var(--accent-orange)' : '4px solid var(--accent-green)') : '4px solid transparent',
-                  background: isOccupied ? (isPaused ? 'rgba(255, 152, 0, 0.05)' : 'rgba(76, 175, 80, 0.05)') : 'var(--bg-glass)',
-                }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <div className="station-icon" style={{ fontSize: '2rem', background: 'rgba(255,255,255,0.1)', padding: 12, borderRadius: '50%' }}>
-                      {getStationIcon(station.type)}
-                    </div>
-                    <div>
-                      <div className="station-name" style={{ fontSize: '1.4rem' }}>{station.name}</div>
-                      <div className="station-type">{station.default_rate_per_hour} DA/h</div>
-                    </div>
-                  </div>
-                  <div>
-                    {isOccupied ? (
-                      <span className={`badge ${isPaused ? 'badge-idle' : 'badge-active'}`} style={{ 
-                        background: isPaused ? 'rgba(255, 152, 0, 0.2)' : 'rgba(76, 175, 80, 0.2)', 
-                        color: isPaused ? 'var(--accent-orange)' : 'var(--accent-green)' 
-                      }}>
-                        {statusText}
-                      </span>
-                    ) : (
-                      <span className="badge badge-idle">Libre</span>
-                    )}
-                  </div>
-                </div>
-
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: 80 }}>
-                  {isOccupied ? (
-                    <>
-                      <div style={{ fontSize: '2.5rem', fontWeight: 800, color: isPaused ? 'var(--accent-orange)' : 'var(--accent-green)', fontVariantNumeric: 'tabular-nums', lineHeight: 1 }}>
-                        {formatDuration(station)}
-                      </div>
-                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 8 }}>
-                        <div style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
-                          {formatCurrency(calculateCost(station))} DA
-                        </div>
-                        {Number(station.orders_total_cost) > 0 && (
-                          <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: 2, fontStyle: 'italic' }}>
-                            + {formatCurrency(Number(station.orders_total_cost))} DA consos
-                          </div>
-                        )}
-                      </div>
-                    </>
-                  ) : (
-                    <div style={{ color: 'var(--text-muted)' }}>Poste prêt</div>
-                  )}
-                </div>
-
-                {/* Boutons d'action unifiés */}
-                <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
-                  {!isOccupied ? (
-                    <button className="btn btn-success" style={{ flex: 1 }} onClick={() => startSession(station.id)}>
-                      ▶ Start
-                    </button>
-                  ) : (
-                    <>
-                      {isPaused ? (
-                        <button className="btn btn-primary" style={{ flex: 1 }} onClick={() => resumeSession(station.active_session_id!)}>
-                          ▶ Reprendre
-                        </button>
-                      ) : (
-                        <button className="btn btn-warning" style={{ flex: 1, background: 'rgba(255, 152, 0, 0.1)', color: 'var(--accent-orange)' }} onClick={() => pauseSession(station.active_session_id!)}>
-                          ⏸ Pause
-                        </button>
-                      )}
-                      
-                      <button className="btn btn-ghost" style={{ padding: '0 12px' }} onClick={() => setSelectedStation(station)}>
-                        🛒
-                      </button>
-
-                      <button className="btn btn-danger" style={{ padding: '0 12px', background: 'rgba(255, 82, 82, 0.1)', color: 'var(--accent-red)' }} onClick={() => {
-                        setSelectedStation(station);
-                        setShowCancelModal(true);
-                      }}>
-                        🛑
-                      </button>
-                    </>
-                  )}
-                </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
+          {psStations.length > 0 && (
+            <div>
+              <h3 style={{ marginBottom: 16, color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ fontSize: '1.5rem' }}>🎮</span> PlayStations
+              </h3>
+              <div className="stations-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
+                {psStations.map(s => renderStationCard(s, true))}
               </div>
-            );
-          })}
+            </div>
+          )}
+
+          {tables.length > 0 && (
+            <div>
+              <h3 style={{ marginBottom: 16, color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ fontSize: '1.5rem' }}>🪑</span> Tables
+              </h3>
+              <div className="stations-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
+                {tables.map(s => renderStationCard(s, false))}
+              </div>
+            </div>
+          )}
+
+          {chairs.length > 0 && (
+            <div>
+              <h3 style={{ marginBottom: 16, color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ fontSize: '1.5rem' }}>☕</span> Chaises
+              </h3>
+              <div className="stations-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
+                {chairs.map(s => renderStationCard(s, false))}
+              </div>
+            </div>
+          )}
+
+          {others.length > 0 && (
+            <div>
+              <h3 style={{ marginBottom: 16, color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ fontSize: '1.5rem' }}>📺</span> Autres Postes
+              </h3>
+              <div className="stations-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
+                {others.map(s => renderStationCard(s, false))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -1307,7 +1399,7 @@ export default function Home() {
                           <button 
                             className="btn btn-ghost btn-sm" 
                             style={{ padding: '4px 10px', fontSize: '0.8rem', background: 'rgba(76, 175, 80, 0.1)', color: 'var(--accent-green)', border: '1px solid rgba(76, 175, 80, 0.3)' }}
-                            onClick={() => setShowGameTimeModal(true)}
+                            onClick={() => { setShowGameTimeModal(true); setCustomGameTimeRate(selectedStation?.default_rate_per_hour || 0); }}
                             title="Ajouter du temps de jeu"
                           >
                             ⏱️ Temps
@@ -1928,20 +2020,26 @@ export default function Home() {
   // ─── Render: Game Time Modal ───────────────────
   const renderGameTimeModal = () => {
     if (!showGameTimeModal || !selectedStation?.active_session_id) return null;
-    const ratePerHour = selectedStation.default_rate_per_hour || 0;
+    const ratePerHour = customGameTimeRate !== '' ? Number(customGameTimeRate) : (selectedStation.default_rate_per_hour || 0);
     const estimatedCost = (gameTimeMinutes / 60) * ratePerHour;
 
     return (
       <div className="modal-overlay" onClick={() => setShowGameTimeModal(false)}>
         <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 380 }}>
           <div className="modal-header">
-            <div className="modal-title">⏱️ Ajouter du temps de jeu</div>
+            <div className="modal-title">⏳ Ajouter du temps de jeu</div>
             <button className="modal-close" onClick={() => setShowGameTimeModal(false)}>✕</button>
           </div>
           <div className="modal-body">
-            <p style={{ color: 'var(--text-secondary)', marginBottom: 16 }}>
-              Tarif du poste : <strong style={{ color: 'var(--accent-orange)' }}>{formatCurrency(ratePerHour)} DA/h</strong>
-            </p>
+            <div style={{ marginBottom: 16 }}>
+              <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Tarif horaire (DA/h) :</label>
+              <input 
+                type="number" 
+                value={customGameTimeRate === '' ? '' : customGameTimeRate} 
+                onChange={(e) => setCustomGameTimeRate(e.target.value === '' ? '' : Number(e.target.value))}
+                style={{ width: '100%', padding: '10px', borderRadius: 8, background: 'var(--bg-glass)', border: '1px solid var(--border-glass)', color: 'white', marginTop: 4 }}
+              />
+            </div>
 
             {/* Preset buttons */}
             <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
@@ -1958,47 +2056,45 @@ export default function Home() {
                   }}
                   onClick={() => setGameTimeMinutes(m)}
                 >
-                  {m} min
+                  {m}m
                 </button>
               ))}
             </div>
 
-            {/* Custom input */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-              <label style={{ color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>Personnalisé :</label>
-              <input
-                type="number"
-                min={1}
-                max={999}
-                value={gameTimeMinutes}
-                onChange={(e) => setGameTimeMinutes(Math.max(1, parseInt(e.target.value) || 1))}
-                style={{
-                  flex: 1, padding: '10px 12px', borderRadius: 8,
-                  background: 'var(--bg-glass)', border: '1px solid var(--border-glass)',
-                  color: 'var(--text-primary)', fontSize: '1.1rem', fontWeight: 700,
-                  textAlign: 'center'
-                }}
-              />
-              <span style={{ color: 'var(--text-muted)' }}>min</span>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, marginBottom: 20 }}>
+              <button 
+                className="btn btn-ghost" 
+                style={{ width: 40, height: 40, borderRadius: '50%', fontSize: '1.2rem', padding: 0 }}
+                onClick={() => setGameTimeMinutes(m => Math.max(1, m - 5))}
+              >
+                -
+              </button>
+              <div style={{ fontSize: '2rem', fontWeight: 700, width: '80px', textAlign: 'center' }}>
+                {gameTimeMinutes}
+              </div>
+              <button 
+                className="btn btn-ghost" 
+                style={{ width: 40, height: 40, borderRadius: '50%', fontSize: '1.2rem', padding: 0 }}
+                onClick={() => setGameTimeMinutes(m => m + 5)}
+              >
+                +
+              </button>
+            </div>
+            
+            <div style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: 24 }}>
+              Coût estimé : <strong style={{ color: 'var(--accent-green)', fontSize: '1.2rem' }}>{formatCurrency(estimatedCost)} DA</strong>
             </div>
 
-            {/* Cost preview */}
-            <div style={{ textAlign: 'center', padding: 16, background: 'rgba(76, 175, 80, 0.08)', borderRadius: 12, border: '1px solid rgba(76, 175, 80, 0.2)' }}>
-              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--accent-green)' }}>
-                {formatCurrency(estimatedCost)} DA
-              </div>
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: 4 }}>
-                {gameTimeMinutes} min × {formatCurrency(ratePerHour / 60)} DA/min
-              </div>
+            <div style={{ display: 'flex', gap: 12 }}>
+              <button className="btn btn-ghost" style={{ flex: 1 }} onClick={() => setShowGameTimeModal(false)}>Annuler</button>
+              <button 
+                className="btn btn-primary" 
+                style={{ flex: 1 }} 
+                onClick={() => addGameTime(selectedStation.active_session_id!, gameTimeMinutes, customGameTimeRate)}
+              >
+                Ajouter
+              </button>
             </div>
-          </div>
-          <div className="modal-footer">
-            <button className="btn btn-ghost" onClick={() => setShowGameTimeModal(false)}>Annuler</button>
-            <button className="btn" style={{ background: 'var(--accent-green)', color: '#1a1a1a', fontWeight: 800, border: 'none', boxShadow: 'none' }} onClick={() => {
-              addGameTime(selectedStation.active_session_id!, gameTimeMinutes);
-            }}>
-              ⏱️ Ajouter {gameTimeMinutes} min
-            </button>
           </div>
         </div>
       </div>
@@ -2676,6 +2772,296 @@ export default function Home() {
     );
   };
 
+
+  // ─── Render: Postes Page ────────────────────────────
+  const renderPostes = () => {
+  const moveStation = async (station: Station, direction: 'up' | 'down') => {
+    // Group PS_NORMAL and PS_MULTI together, otherwise use the exact type
+    const getGroup = (type: string) => type.startsWith('PS_') ? 'PS' : type;
+    const sameTypeStations = stations.filter(s => getGroup(s.type) === getGroup(station.type));
+    const currentIndex = sameTypeStations.findIndex(s => s.id === station.id);
+    if (currentIndex === -1) return;
+    
+    const newIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
+    if (newIndex < 0 || newIndex >= sameTypeStations.length) return;
+
+    // Swap display_order
+    const currentOrder = station.display_order || currentIndex;
+    const targetStation = sameTypeStations[newIndex];
+    const targetOrder = targetStation.display_order || newIndex;
+
+    try {
+      const updates = [
+        { id: station.id, display_order: targetOrder },
+        { id: targetStation.id, display_order: currentOrder }
+      ];
+      await fetch('/api/stations/reorder', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ updates })
+      });
+      fetchStations();
+    } catch (e) {
+      showToast('Erreur lors du déplacement', 'error');
+    }
+  };
+
+    return (
+      <div className="page">
+        <div className="section-header" style={{ marginTop: 28 }}>
+          <div>
+            <div className="section-title">Gestion des Postes</div>
+            <div className="section-subtitle">Configurer les PlayStations, Tables et Chaises de la salle</div>
+          </div>
+          <button className="btn btn-primary" onClick={() => setShowAddStationModal(true)}>
+            + Nouveau Poste
+          </button>
+        </div>
+
+        <div className="card" style={{ marginTop: 24, overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <thead>
+              <tr style={{ borderBottom: '1px solid var(--border-glass)' }}>
+                <th style={{ padding: '16px', color: 'var(--text-secondary)' }}>ID</th>
+                <th style={{ padding: '16px', color: 'var(--text-secondary)' }}>Nom</th>
+                <th style={{ padding: '16px', color: 'var(--text-secondary)' }}>Catégorie</th>
+                <th style={{ padding: '16px', color: 'var(--text-secondary)' }}>Tarif (DA/h)</th>
+                <th style={{ padding: '16px', color: 'var(--text-secondary)' }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {stations.map(station => (
+                <tr key={station.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                  <td style={{ padding: '16px' }}>#{station.id}</td>
+                  <td style={{ padding: '16px', fontWeight: 'bold' }}>{station.name}</td>
+                  <td style={{ padding: '16px' }}>
+                    <span className="badge badge-idle" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                      {getStationIcon(station.type)} {getStationLabel(station.type)}
+                    </span>
+                  </td>
+                  <td style={{ padding: '16px' }}>{station.default_rate_per_hour > 0 ? `${station.default_rate_per_hour} DA/h` : '-'}</td>
+                  <td style={{ padding: '16px' }}>
+                    <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', marginRight: 8 }}>
+                        <button className="btn btn-ghost" style={{ padding: '2px 6px', fontSize: '0.8rem' }} onClick={() => moveStation(station, 'up')}>▲</button>
+                        <button className="btn btn-ghost" style={{ padding: '2px 6px', fontSize: '0.8rem' }} onClick={() => moveStation(station, 'down')}>▼</button>
+                      </div>
+                      <button 
+                        className="btn btn-ghost" 
+                        style={{ padding: '6px 12px' }}
+                        onClick={() => {
+                          setSelectedEditStation(station);
+                          setShowEditStationModal(true);
+                        }}
+                      >
+                        ✏️ Éditer
+                      </button>
+                      <button 
+                        className="btn btn-ghost" 
+                        style={{ padding: '6px 12px', color: 'var(--accent-red)' }}
+                        onClick={() => {
+                          setSelectedEditStation(station);
+                          setShowDeleteStationModal(true);
+                        }}
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              {stations.length === 0 && (
+                <tr>
+                  <td colSpan={5} style={{ padding: '32px', textAlign: 'center', color: 'var(--text-muted)' }}>
+                    Aucun poste trouvé.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  };
+
+  // ─── Render: Add Station Modal ──────────────────────
+  const renderAddStationModal = () => {
+    if (!showAddStationModal) return null;
+
+    const handleAddStation = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const formData = new FormData(e.currentTarget);
+      const data = Object.fromEntries(formData);
+      
+      try {
+        const res = await fetch('/api/stations', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        
+        if (!res.ok) throw new Error('Erreur création poste');
+        
+        showToast('Poste créé ✅', 'success');
+        setShowAddStationModal(false);
+        fetchStations();
+      } catch (error: any) {
+        showToast(error.message, 'error');
+      }
+    };
+
+    return (
+      <div className="modal-overlay" onClick={() => setShowAddStationModal(false)}>
+        <div className="modal" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-header">
+            <div className="modal-title">Nouveau Poste</div>
+            <button className="modal-close" onClick={() => setShowAddStationModal(false)}>✕</button>
+          </div>
+          
+          <form onSubmit={handleAddStation} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Nom du poste</label>
+              <input name="name" type="text" placeholder="Ex: PS5 VIP 1, Table 4..." required style={{ padding: 12, borderRadius: 8, background: 'var(--bg-glass)', border: '1px solid var(--border-glass)', color: 'white' }} />
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Catégorie</label>
+              <select name="type" required style={{ padding: 12, borderRadius: 8, background: '#12121e', border: '1px solid var(--border-glass)', color: 'white' }}>
+                <option value="PS_NORMAL">PlayStation Solo</option>
+                <option value="PS_MULTI">PlayStation Multi</option>
+                <option value="TABLE">Table</option>
+                <option value="CHAIR">Chaise</option>
+                <option value="OTHER">Autre (Spécial)</option>
+              </select>
+            </div>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Tarif horaire (DA/h) - (0 si gratuit)</label>
+              <input name="default_rate_per_hour" type="number" defaultValue="0" required style={{ padding: 12, borderRadius: 8, background: 'var(--bg-glass)', border: '1px solid var(--border-glass)', color: 'white' }} />
+            </div>
+
+            <div className="modal-footer" style={{ marginTop: 16 }}>
+              <button type="button" className="btn btn-ghost" onClick={() => setShowAddStationModal(false)}>Annuler</button>
+              <button type="submit" className="btn btn-primary">Créer</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  };
+
+  // ─── Render: Edit Station Modal ─────────────────────
+  const renderEditStationModal = () => {
+    if (!showEditStationModal || !selectedEditStation) return null;
+
+    const handleEditStation = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const formData = new FormData(e.currentTarget);
+      const data = Object.fromEntries(formData);
+      
+      try {
+        const res = await fetch(`/api/stations/${selectedEditStation.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        
+        if (!res.ok) throw new Error('Erreur modification poste');
+        
+        showToast('Poste mis à jour ✅', 'success');
+        setShowEditStationModal(false);
+        fetchStations();
+      } catch (error: any) {
+        showToast(error.message, 'error');
+      }
+    };
+
+    return (
+      <div className="modal-overlay" onClick={() => setShowEditStationModal(false)}>
+        <div className="modal" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-header">
+            <div className="modal-title">Éditer Poste</div>
+            <button className="modal-close" onClick={() => setShowEditStationModal(false)}>✕</button>
+          </div>
+          
+          <form onSubmit={handleEditStation} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Nom du poste</label>
+              <input name="name" type="text" defaultValue={selectedEditStation.name} required style={{ padding: 12, borderRadius: 8, background: 'var(--bg-glass)', border: '1px solid var(--border-glass)', color: 'white' }} />
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Catégorie</label>
+              <select name="type" defaultValue={selectedEditStation.type} required style={{ padding: 12, borderRadius: 8, background: '#12121e', border: '1px solid var(--border-glass)', color: 'white' }}>
+                <option value="PS_NORMAL">PlayStation Solo</option>
+                <option value="PS_MULTI">PlayStation Multi</option>
+                <option value="TABLE">Table</option>
+                <option value="CHAIR">Chaise</option>
+                <option value="OTHER">Autre (Spécial)</option>
+              </select>
+            </div>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Tarif horaire (DA/h)</label>
+              <input name="default_rate_per_hour" type="number" defaultValue={selectedEditStation.default_rate_per_hour} required style={{ padding: 12, borderRadius: 8, background: 'var(--bg-glass)', border: '1px solid var(--border-glass)', color: 'white' }} />
+            </div>
+
+            <div className="modal-footer" style={{ marginTop: 16 }}>
+              <button type="button" className="btn btn-ghost" onClick={() => setShowEditStationModal(false)}>Annuler</button>
+              <button type="submit" className="btn btn-primary">Enregistrer</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  };
+
+  // ─── Render: Delete Station Modal ───────────────────
+  const renderDeleteStationModal = () => {
+    if (!showDeleteStationModal || !selectedEditStation) return null;
+
+    const handleDeleteStation = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      try {
+        const res = await fetch(`/api/stations/${selectedEditStation.id}`, { method: 'DELETE' });
+        
+        if (!res.ok) {
+           const err = await res.json();
+           throw new Error(err.error || 'Erreur suppression');
+        }
+        
+        showToast('Poste supprimé 🗑️', 'success');
+        setShowDeleteStationModal(false);
+        fetchStations();
+      } catch (error: any) {
+        showToast(error.message, 'error');
+      }
+    };
+
+    return (
+      <div className="modal-overlay" onClick={() => setShowDeleteStationModal(false)}>
+        <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 380 }}>
+          <div className="modal-header">
+            <div className="modal-title">⚠️ Supprimer le poste</div>
+            <button className="modal-close" onClick={() => setShowDeleteStationModal(false)}>✕</button>
+          </div>
+          <div className="modal-body">
+            <p style={{ color: 'var(--text-secondary)' }}>
+              Voulez-vous vraiment supprimer le poste <strong style={{ color: 'var(--text-primary)' }}>{selectedEditStation.name}</strong> ?
+            </p>
+            
+            <form onSubmit={handleDeleteStation} style={{ marginTop: 24 }}>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-ghost" onClick={() => setShowDeleteStationModal(false)}>Annuler</button>
+                <button type="submit" className="btn btn-danger">🗑️ Supprimer</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   // ─── Loading State ────────────────────────────────
   if (loading && !dbConnected) {
     return (
@@ -2706,6 +3092,7 @@ export default function Home() {
         {currentPage === 'dashboard' && renderDashboard()}
         {currentPage === 'products' && renderProducts()}
         {currentPage === 'team' && renderTeam()}
+        {currentPage === 'postes' && renderPostes()}
       </main>
 
       {/* Modals */}
@@ -2725,6 +3112,9 @@ export default function Home() {
       {renderAddProductCatalogModal()}
       {renderEditProductCatalogModal()}
       {renderDeleteProductCatalogModal()}
+      {renderAddStationModal()}
+      {renderEditStationModal()}
+      {renderDeleteStationModal()}
 
       {/* Toast */}
 
